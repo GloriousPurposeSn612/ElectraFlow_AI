@@ -6,6 +6,7 @@ async function test() {
         body: {
             query: 'How to vote in elections 2026?',
             language: 'en',
+            accessibilityMode: true,
             sessionId: 'test-session-123'
         }
     };

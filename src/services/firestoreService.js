@@ -1,12 +1,12 @@
 const db = require('../config/firebase');
 
 // Normalize query
-function getQueryHash(query, language) {
+function getQueryHash(query, language, accessibilityMode = false) {
     return query
         .toLowerCase()
         .trim()
         .replace(/[^a-z0-9 ]/g, "")
-        .replace(/\s+/g, "_") + `_${language}`;
+        .replace(/\s+/g, "_") + `_${language}_${accessibilityMode}`;
 }
 
 // Check cache

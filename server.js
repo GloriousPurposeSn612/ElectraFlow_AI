@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const path = require('path');
 
 dotenv.config();
 
@@ -12,13 +11,11 @@ const PORT = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.json());
 
+// Serve static files
+app.use(express.static('public'));
+
 // API routes
 app.use('/api', require('./src/routes/api'));
-
-// Health check (important for Cloud Run)
-app.get('/', (req, res) => {
-    res.send('ElectraFlow AI is running');
-});
 
 // 404 fallback
 app.use((req, res) => {

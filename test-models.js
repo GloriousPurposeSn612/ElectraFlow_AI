@@ -7,8 +7,15 @@ const ai = new GoogleGenAI({
 });
 
 async function listModels() {
-    const models = await ai.models.list();
-    console.log(models);
+    const response = await ai.models.list();
+    if (response.pageInternal) {
+        console.log("pageInternal type:", typeof response.pageInternal);
+        console.log("pageInternal Is array:", Array.isArray(response.pageInternal));
+        console.log("pageInternal Keys:", Object.keys(response.pageInternal));
+        if (Array.isArray(response.pageInternal)) {
+            console.log("Model names:", response.pageInternal.map(m => m.name));
+        }
+    }
 }
 
 listModels();

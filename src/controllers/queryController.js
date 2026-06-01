@@ -32,7 +32,7 @@ async function handleQuery(req, res) {
     }
 
     const start = Date.now();
-    const hash = getQueryHash(query, language);
+    const hash = getQueryHash(query, language, accessibilityMode);
 
     // 1. Check cache
     let response = await getCachedResponse(hash);
@@ -61,6 +61,15 @@ async function handleQuery(req, res) {
         lastQuery: query,
         lastIntent: detectIntent(query)
     });
+
+    if (response.isRateLimit) {
+        return res.status(429).json({
+            status: 'error',
+            error: 'rate_limit',
+            data: response,
+            meta: { source, responseTime }
+        });
+    }
 
     return res.json({
         status: 'success',
